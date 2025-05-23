@@ -8,13 +8,26 @@ const Form = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    username: "",
+    userName: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
     password: "",
     confirmPassword: "",
-    birthday: "",
+    dob: "",
   });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    if (value === "") {
+      console.log("yum alga");
+    } else {
+      console.log(`${name}: ${value}`);
+    }
+  };
 
   return (
     <div className="w-screen h-screen bg-[#F4F4F4] flex justify-center items-center">
@@ -37,18 +50,27 @@ const Form = () => {
               <div className="w-[416px] flex flex-col gap-3">
                 <Input
                   type="text"
+                  name="firstName"
                   text="First name"
                   placeholder="Your first name"
+                  value={formData.firstName}
+                  onChange={handleChange}
                 />
                 <Input
                   type="text"
+                  name="lastName"
                   text="Last name"
                   placeholder="Your last name"
+                  value={formData.lastName}
+                  onChange={handleChange}
                 />
                 <Input
                   type="text"
+                  name="userName"
                   text="Username"
                   placeholder="Your username"
+                  value={formData.userName}
+                  onChange={handleChange}
                 />
               </div>
             )}
@@ -56,21 +78,37 @@ const Form = () => {
             {/* SECOND SECTION */}
             {step === 2 && (
               <div className="w-[416px] flex flex-col gap-3">
-                <Input type="email" text="Email" placeholder="Your email" />
+                <Input
+                  type="email"
+                  text="Email"
+                  placeholder="Your email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
                 <Input
                   type="number"
+                  name="phoneNumber"
                   text="Phone Number"
                   placeholder="Your phone number"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
                 />
                 <Input
                   type="password"
+                  name="password"
                   text="Password"
                   placeholder="Your password"
+                  value={formData.password}
+                  onChange={handleChange}
                 />
                 <Input
                   type="password"
+                  name="confirmPassword"
                   text="Confirm password"
                   placeholder="Confirm password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
                 />
               </div>
             )}
@@ -78,17 +116,58 @@ const Form = () => {
             {/* THIRD SECTION */}
             {step === 3 && (
               <div className="w-[416px] flex flex-col gap-3">
-                <Input text="Date of birth" placeholder="Your birthday" />
+                <Input
+                  text="Date of birth"
+                  placeholder="Your birthday"
+                  name="dob"
+                  value={formData.dob}
+                  onChange={handleChange}
+                />
               </div>
             )}
           </div>
 
           {/* CONTINUE BUTTON */}
           <div className="flex w-full gap-2">
-            {step === 2 && <Back step={step} setStep={setStep} />}
-            {step === 3 && <Back step={step} setStep={setStep} />}
+            {(step === 2 || step === 3) && (
+              <Back step={step} setStep={setStep} />
+            )}
             <button
               onClick={() => {
+                // VERIFICATION OF STEP 1
+                if (step === 1) {
+                  if (
+                    formData.firstName === "" ||
+                    formData.lastName === "" ||
+                    formData.userName === ""
+                  ) {
+                    <div>hi</div>;
+                    return;
+                  }
+                }
+
+                // VERIFICATION OF STEP 2
+                if (step === 2) {
+                  if (
+                    formData.email === "" ||
+                    formData.phoneNumber === "" ||
+                    formData.password === "" ||
+                    formData.confirmPassword === ""
+                  ) {
+                    <p>Hi</p>;
+                    return;
+                  }
+                }
+
+                // VERIFICATION OF STEP 3
+                if (step === 3) {
+                  if (formData.dob === "") {
+                    <p>Hi</p>;
+                    return;
+                  }
+                }
+
+                // STEP SOLIH
                 if (step < 3) {
                   setStep(step + 1);
                 }
