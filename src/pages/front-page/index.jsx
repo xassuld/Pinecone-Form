@@ -141,7 +141,7 @@ const Form = () => {
                     formData.lastName === "" ||
                     formData.userName === ""
                   ) {
-                    <div>hi</div>;
+                    alert("Please fill in all fields before continuing.");
                     return;
                   }
                 }
@@ -154,7 +154,7 @@ const Form = () => {
                     formData.password === "" ||
                     formData.confirmPassword === ""
                   ) {
-                    <p>Hi</p>;
+                    alert("Please fill in all fields before continuing.");
                     return;
                   }
                 }
@@ -162,7 +162,7 @@ const Form = () => {
                 // VERIFICATION OF STEP 3
                 if (step === 3) {
                   if (formData.dob === "") {
-                    <p>Hi</p>;
+                    alert("Please fill in all fields before continuing.");
                     return;
                   }
                 }
