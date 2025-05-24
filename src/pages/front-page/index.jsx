@@ -16,6 +16,17 @@ const Form = () => {
     dob: "",
   });
 
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    userName: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    confirmPassword: "",
+    dob: "",
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -30,7 +41,7 @@ const Form = () => {
   };
 
   return (
-    <div className="w-screen h-screen bg-[#F4F4F4] flex justify-center items-center">
+    <div className="w-screen h-screen bg-[#1d1c1c] flex justify-center items-center">
       <div className="w-[480px] h-[655px] p-8 flex flex-col bg-white rounded-[8px]">
         <div className="h-full w-full flex flex-col justify-between">
           <div className="flex flex-col gap-7">
@@ -55,6 +66,7 @@ const Form = () => {
                   placeholder="Your first name"
                   value={formData.firstName}
                   onChange={handleChange}
+                  error={errors.firstName}
                 />
                 <Input
                   type="text"
@@ -63,6 +75,7 @@ const Form = () => {
                   placeholder="Your last name"
                   value={formData.lastName}
                   onChange={handleChange}
+                  error={errors.lastName}
                 />
                 <Input
                   type="text"
@@ -71,6 +84,7 @@ const Form = () => {
                   placeholder="Your username"
                   value={formData.userName}
                   onChange={handleChange}
+                  error={errors.userName}
                 />
               </div>
             )}
@@ -85,6 +99,7 @@ const Form = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  error={errors.email}
                 />
                 <Input
                   type="number"
@@ -93,6 +108,7 @@ const Form = () => {
                   placeholder="Your phone number"
                   value={formData.phoneNumber}
                   onChange={handleChange}
+                  error={errors.phoneNumber}
                 />
                 <Input
                   type="password"
@@ -101,6 +117,7 @@ const Form = () => {
                   placeholder="Your password"
                   value={formData.password}
                   onChange={handleChange}
+                  error={errors.password}
                 />
                 <Input
                   type="password"
@@ -109,6 +126,7 @@ const Form = () => {
                   placeholder="Confirm password"
                   value={formData.confirmPassword}
                   onChange={handleChange}
+                  error={errors.confirmPassword}
                 />
               </div>
             )}
@@ -122,6 +140,7 @@ const Form = () => {
                   name="dob"
                   value={formData.dob}
                   onChange={handleChange}
+                  error={errors.dob}
                 />
               </div>
             )}
@@ -136,35 +155,44 @@ const Form = () => {
               onClick={() => {
                 // VERIFICATION OF STEP 1
                 if (step === 1) {
-                  if (
-                    formData.firstName === "" ||
-                    formData.lastName === "" ||
-                    formData.userName === ""
-                  ) {
-                    alert("Please fill in all fields before continuing.");
+                  const newErrors = {};
+                  if (formData.firstName === "")
+                    newErrors.firstName = "Please fill out this field";
+                  if (formData.lastName === "")
+                    newErrors.lastName = "Please fill out this field";
+                  if (formData.userName === "")
+                    newErrors.userName = "Please fill out this field";
+
+                  setErrors(newErrors); // save errors to state
+
+                  if (Object.keys(newErrors).length > 0) {
+                    // If there are errors, stop here and do NOT move to next step
                     return;
                   }
                 }
 
                 // VERIFICATION OF STEP 2
                 if (step === 2) {
-                  if (
-                    formData.email === "" ||
-                    formData.phoneNumber === "" ||
-                    formData.password === "" ||
-                    formData.confirmPassword === ""
-                  ) {
-                    alert("Please fill in all fields before continuing.");
-                    return;
-                  }
+                  const newErrors = {};
+                  if (formData.email === "")
+                    newErrors.email = "Please fill out this field";
+                  if (formData.phoneNumber === "")
+                    newErrors.phoneNumber = "Please fill out this field";
+                  if (formData.password === "")
+                    newErrors.password = "Please fill out this field";
+                  if (formData.confirmPassword === "")
+                    newErrors.confirmPassword = "Please fill out this field";
+
+                  setErrors(newErrors);
+
+                  if (Object.keys(newErrors).length > 0) return;
                 }
 
                 // VERIFICATION OF STEP 3
                 if (step === 3) {
-                  if (formData.dob === "") {
-                    alert("Please fill in all fields before continuing.");
-                    return;
-                  }
+                  const newErrors = {};
+                  if (formData.dob === "")
+                    newErrors.dob = "Please fill out thise field";
                 }
 
                 // STEP SOLIH
